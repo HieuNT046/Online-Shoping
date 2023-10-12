@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo-admin">
+                Ecommerce Admin
+            </div>
+            <div id="banner-admin">
+                <ul>
+                    <li><a href="~/account/signout">SignOut</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            <div id="content-left">
+                <ul>
+                    <a href="~/admin/dashboard">
+                    <li>Dashboard</li></a>
+                    <a href="~/admin/order/index">
+                    <li>Orders</li></a>
+                    <a href="~/admin/product/index">
+                    <li>Products</li></a>
+                    <a href="~/admin/customer/index">
+                    <li>Customers</li></a>
+                </ul>
+            </div>
+@RenderBody()
+            </div>
+            <div id="footer-admin">footer</div>
+        </div>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+        <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+        <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

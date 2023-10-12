@@ -1,0 +1,161 @@
+﻿@page
+@model MyRazorPage.Pages.Product.ListModel
+@{
+}
+
+<div id="content-right">
+    <div class="path-admin">PRODUCTS LIST</b></div>
+    <div class="content-main">
+        <div id="content-main-dashboard">
+            <div id="product-title-header">
+                <div id="product-title-1" style="width: 25%;">
+                    <b>Filter by Catetory:</b>
+                    <form method="get">
+                        <select name="ddlCategory">
+                            <option>--- Select ---</option>
+                            @if (Model.categories is not null)
+                            {
+                                @foreach (var category in Model.categories)
+                                {
+                                    @if (ViewData["Category"] is not null)
+                                    {
+                                        @if (category.CategoryId == Int32.Parse(ViewData["Category"].ToString()))
+                                        {
+                                            <option value="@category.CategoryId" selected>@category.CategoryName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@category.CategoryId">@category.CategoryName</option>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@category.CategoryId">@category.CategoryName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        @if (ViewData["Search"] is not null)
+                        {
+                            <input name="txtSearch" asp-for="@ViewData["Search"]" hidden />
+                        }
+                        <input type="submit" value="Filter">
+                    </form>
+                </div>
+                <div id="product-title-2" style="width: 55%;">
+                    <form method="get">
+                        <input name="ddlCategory" asp-for="@ViewData["Category"]" hidden />
+                        @if (ViewData["Search"] is not null)
+                        {
+                            <input type="text" name="txtSearch" placeholder="Enter product name to search" asp-for="@ViewData["Search"]" />
+                        }
+                        else
+                        {
+                            <input type="text" name="txtSearch" placeholder="Enter product name to search" />
+                        }
+                        <input type="submit" value="Search" />
+                    </form>
+                </div>
+                <div id="product-title-3" style="width: 20%;">
+                    <a href="/admin/product/create">Create a new Product</a>
+                    <a asp-page="/admin/product/index" asp-page-handler="export" asp-route-ddlCategory="@ViewData["Category"]" asp-route-txtSearch="@ViewData["Search"]">Export to .xls or .xlsx file</a>
+                    <form enctype="multipart/form-data" method="post">
+                        <label for="upload-file">Import .xls or .xlsx file</label>
+                        <input type="file" name="file" id="upload-file" onchange="this.form.submit()" />
+                    </form>
+                </div>
+            </div>
+            <div id="order-table-admin">
+                <table id="orders">
+                    <tr>
+                        <th>ProductID</th>
+                        <th>ProductName</th>
+                        <th>UnitPrice</th>
+                        <th>Unit</th>
+                        <th>UnitsInStock</th>
+                        <th>Category</th>
+                        <th>Discontinued</th>
+                        <th></th>
+                    </tr>
+                    @if (Model.products is not null)
+                    {
+                        @foreach (var product in Model.products)
+                        {
+                            <tr>
+                                <td><a asp-page="/product/detail" asp-route-id="@product.ProductId">#@product.ProductId</a></td>
+                                <td>@product.ProductName</td>
+                                <td>@product.UnitPrice</td>
+                                <td>@product.QuantityPerUnit pieces</td>
+                                <td>@product.UnitsInStock</td>
+                                @if (product.Category is not null)
+                                {
+                                    <td>@product.Category.CategoryName</td>
+                                }
+                                else
+                                {
+                                    <td>-</td>
+                                }
+                                <td>@product.Discontinued</td>
+                                <td>
+                            <a asp-page="/admin/product/create" asp-route-id="@product.ProductId">Edit</a> &nbsp; | &nbsp;
+                            @if(product.Discontinued == false)
+                            {
+                                <a asp-page="/admin/product/delete" asp-route-id="@product.ProductId" onclick="return confirm('Are you sure you want to Delete?')">Delete</a>
+                            }else{
+                                <a>Hide</a>
+                            }
+                        </td>
+                            </tr>
+                        }
+                    }
+                    else{
+                        @ViewData["Mess"];
+                    }
+                </table>
+            </div>
+            <div id="paging">
+                <div class="pagination">
+                    @if (Model.products is not null)
+                    {
+                        @if (Model.products.TotalPages > 0)
+                        {
+                            @if (Model.products.CurrentPage > 1)
+                            {
+                                <a asp-page="/admin/product/index"
+                       asp-route-ddlCategory="@ViewData["Category"]"
+                       asp-route-pageIndex="@(Model.products.CurrentPage-1)"
+                       asp-route-txtSearch="@ViewData["Search"]">&laquo;</a>
+                            }
+                            @for (var i = Model.products.StartPage; i <= Model.products.EndPage; i++)
+                            {
+                                @if (i == Model.products.CurrentPage)
+                                {
+                                    <a class="active" asp-page="/admin/product/index"
+                       asp-route-ddlCategory="@ViewData["Category"]"
+                       asp-route-pageIndex="@i"
+                       asp-route-txtSearch="@ViewData["Search"]">@i</a>
+                                }
+                                else
+                                {
+                                    <a asp-page="/admin/product/index"
+                       asp-route-ddlCategory="@ViewData["Category"]"
+                       asp-route-pageIndex="@i"
+                       asp-route-txtSearch="@ViewData["Search"]">@i</a>
+                                }
+                            }
+                            @if (Model.products.TotalPages > 1 && Model.products.CurrentPage < Model.products.TotalPages)
+                            {
+                                <a asp-page="/admin/product/index"
+                       asp-route-ddlCategory="@ViewData["Category"]"
+                       asp-route-pageIndex="@(Model.products.CurrentPage+1)"
+                       asp-route-txtSearch="@ViewData["Search"]">&raquo;</a>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

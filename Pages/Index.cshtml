@@ -1,0 +1,88 @@
+﻿@page
+@model MyRazorPage.Pages.IndexModel
+@{
+}
+<div id="content-left">
+    <h3>CATEGORY</h3>
+    <ul>
+        @{
+            foreach (var category in Model.categories)
+            {
+                <a asp-page="/category/index" asp-route-id="@category.CategoryId" asp-route-sort="name-asc" asp-route-pg="1">
+                <li>@category.CategoryName</li></a>               
+            }
+        }
+    </ul>
+</div>
+<div id="content-right">
+    <div class="path">Hot</b></div>
+    <div class="content-main">
+        <div class="product">
+            <a href="detail.html"><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="detail.html">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+        <div class="product">
+            <a href=""><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+        <div class="product">
+            <a href=""><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+        <div class="product">
+            <a href=""><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+    </div>
+    <div class="path">Best Sale</b></div>
+    <div class="content-main">
+        @{
+            foreach(var bestSaleProduct in Model.bestSaleProducts) {
+                <div class="product">
+                    <a asp-page="/product/detail" asp-route-id="@bestSaleProduct.ProductId"><img src="img/1.jpg" width="100%" /></a>
+                    <div class="name"><a asp-page="/product/detail" asp-route-id="@bestSaleProduct.ProductId">@bestSaleProduct.ProductName</a></div>
+                    <div class="price">@bestSaleProduct.UnitPrice</div>
+                    <a asp-page="/account/cart" asp-page-handler="buynow" asp-route-id="@bestSaleProduct.ProductId">Buy Now</a>
+                </div>
+            }
+        }
+    </div>
+    <div class="path">New Product</b></div>
+    <div class="content-main">
+        <div class="product">
+            <a href="detail.html"><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="detail.html">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+        <div class="product">
+            <a href=""><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+        <div class="product">
+            <a href=""><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+        <div class="product">
+            <a href=""><img src="img/1.jpg" width="100%" /></a>
+            <div class="name"><a href="">Product 1</a></div>
+            <div class="price">$1000</div>
+            <div><a href="">Buy now</a></div>
+        </div>
+    </div>
+</div>
+
+
+
